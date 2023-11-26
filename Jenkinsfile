@@ -11,9 +11,15 @@ pipeline {
         stage('Compile') {
             steps {
                 echo 'Compiling the code'
+                echo 'Compiling in ${params.Env}'
             }
         }
         stage('UnitTest') {
+            when {
+                expression{
+                    params.executeTests ==true
+                }
+            }
             steps {
                 echo 'testing the code'
             }
@@ -21,6 +27,7 @@ pipeline {
         stage('Package') {
             steps {
                 echo 'Packaging the code'
+                echo "Packaging version ${params.APPVERSION}"
             }
         }
     }
